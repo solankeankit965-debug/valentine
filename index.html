@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fbb6ce 0%, #fca5a5 50%, #fbb6ce 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 50px 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            padding: 18px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ec4899 0%, #ef4444 100%);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+        }
+
+        .no-btn-container {
+            position: relative;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .no-btn {
+            background: #d1d5db;
+            color: #4b5563;
+            position: absolute;
+            transition: all 0.3s ease-out;
+        }
+
+        .no-btn:hover {
+            background: #9ca3af;
+        }
+
+        .hint {
+            font-size: 14px;
+            color: #ec4899;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .extra-hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Success screen */
+        .success {
+            background: linear-gradient(135deg, #f472b6 0%, #f87171 50%, #f472b6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+        }
+
+        .success-content {
+            text-align: center;
+            color: white;
+            z-index: 10;
+        }
+
+        .success-emoji {
+            font-size: 120px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        .success h1 {
+            font-size: 60px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .success p {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .success .subtitle {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 3s linear;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -50px;
+                opacity: 1;
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 28px; }
+            p { font-size: 16px; }
+            button { font-size: 16px; padding: 15px 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="main-content">
+        <div class="container">
+            <div class="emoji">💖</div>
+            <h1>Will You Be My Valentine? 💘</h1>
+            <p>I was thinking… life is better with you in it. So I have just one important question for you 🌹</p>
+            
+            <div class="buttons">
+                <button class="yes-btn" onclick="handleYes()">✅ Yes</button>
+                <button class="yes-btn" onclick="handleYes()">💕 Of course, YES!</button>
+                
+                <div class="no-btn-container">
+                    <button class="no-btn" id="noBtn">❌ No (try if you can 😉)</button>
+                </div>
+            </div>
+
+            <div id="hint" class="hint hidden">Come on… you know the answer already 😌</div>
+            <div id="extraHint" class="extra-hint hidden">Nice try though! 😄</div>
+        </div>
+    </div>
+
+    <div id="success" class="success hidden">
+        <div class="success-content">
+            <div class="success-emoji">💖</div>
+            <h1>Yay! 🎉</h1>
+            <p>You've made me the happiest! 💕</p>
+            <p class="subtitle">Happy Valentine's Day! 🌹</p>
+        </div>
+    </div>
+
+    <script>
+        let dodgeCount = 0;
+        const noBtn = document.getElementById('noBtn');
+        const hint = document.getElementById('hint');
+        const extraHint = document.getElementById('extraHint');
+
+        // Track mouse position
+        document.addEventListener('mousemove', function(e) {
+            if (document.getElementById('success').classList.contains('hidden')) {
+                moveButton(e.clientX, e.clientY);
+            }
+        });
+
+        // Track touch position for mobile
+        document.addEventListener('touchmove', function(e) {
+            if (document.getElementById('success').classList.contains('hidden')) {
+                const touch = e.touches[0];
+                moveButton(touch.clientX, touch.clientY);
+            }
+        });
+
+        function moveButton(mouseX, mouseY) {
+            const btnRect = noBtn.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+
+            const distance = Math.sqrt(
+                Math.pow(mouseX - btnCenterX, 2) + 
+                Math.pow(mouseY - btnCenterY, 2)
+            );
+
+            if (distance < 100) {
+                dodgeCount++;
+                
+                // Show hints
+                if (dodgeCount >= 3) {
+                    hint.classList.remove('hidden');
+                }
+                if (dodgeCount >= 7) {
+                    extraHint.classList.remove('hidden');
+                }
+
+                // Calculate new position
+                const container = noBtn.parentElement;
+                const containerRect = container.getBoundingClientRect();
+                const maxX = containerRect.width - noBtn.offsetWidth;
+                const maxY = containerRect.height - noBtn.offsetHeight;
+
+                const newX = Math.random() * maxX - (maxX / 2);
+                const newY = Math.random() * maxY - (maxY / 2);
+
+                noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+            }
+        }
+
+        function handleYes() {
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById('success').classList.remove('hidden');
+            
+            // Create falling hearts
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => createHeart(), i * 200);
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+            document.getElementById('success').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
